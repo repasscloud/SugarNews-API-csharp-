@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Net;
-using Newtonsoft.Json;
+using System.Text.Json;
 using SugarNewsAPI.Constants;
 using SugarNewsAPI.Models;
 
@@ -12,22 +12,28 @@ namespace SugarNewsAPI;
 public class SugarNewsApiClient
 {
     private string BASE_URL = "https://newsapi.org/v2/";
-
-    private HttpClient HttpClient;
-
+    private readonly HttpClient _httpClient;
     private string ApiKey;
 
     /// <summary>
     /// Use this to get results from NewsAPI.org.
     /// </summary>
     /// <param name="apiKey">Your News API key. You can create one for free at https://newsapi.org.</param>
-    public SugarNewsApiClient(string apiKey)
+    /// <param name="httpClient">HttpClient factory or service.</param>
+    public SugarNewsApiClient(string apiKey, HttpClient httpClient)
     {
         ApiKey = apiKey;
 
-        HttpClient = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
-        HttpClient.DefaultRequestHeaders.Add("user-agent", "News-API-csharp/0.1");
-        HttpClient.DefaultRequestHeaders.Add("x-api-key", ApiKey);
+        _httpClient = httpClient;
+        _httpClient.DefaultRequestHeaders.Add("user-agent", "SugarNews-API-csharp/0.1.2");
+        _httpClient.DefaultRequestHeaders.Add("x-api-key", ApiKey);
+
+        var handler = new HttpClientHandler
+        {
+            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
+        };
+
+        _httpClient = new HttpClient(handler);
     }
 
     /// <summary>
@@ -184,13 +190,14 @@ public class SugarNewsApiClient
 
         // make the http request
         var httpRequest = new HttpRequestMessage(HttpMethod.Get, BASE_URL + endpoint + "?" + querystring);
-        var httpResponse = await HttpClient.SendAsync(httpRequest);
+        var httpResponse = await _httpClient.SendAsync(httpRequest);
 
         var json = await httpResponse.Content?.ReadAsStringAsync()!;
         if (!string.IsNullOrWhiteSpace(json))
         {
             // convert the json to an obj
-            var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(json);
+            var apiResponse = JsonSerializer.Deserialize<ApiResponse>(json);
+            //var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(json);
             articlesResult.Status = apiResponse!.Status;
             if (articlesResult.Status == Statuses.Ok)
             {

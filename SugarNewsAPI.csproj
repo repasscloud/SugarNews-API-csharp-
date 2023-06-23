@@ -4,21 +4,17 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Remove="Constants\" />
-    <None Remove="Models\" />
-    <None Remove="icon.png" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Constants\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <Content Include="icon.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="icon.png" />
+    <None Include="README.md" Pack="true" PackagePath="\" />
   </ItemGroup>
 </Project>
