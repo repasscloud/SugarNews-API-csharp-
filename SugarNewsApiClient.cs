@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Net;
-using System.Text.Json;
+using Newtonsoft.Json;
 using SugarNewsAPI.Constants;
 using SugarNewsAPI.Models;
 
@@ -12,7 +12,7 @@ namespace SugarNewsAPI;
 public class SugarNewsApiClient
 {
     private string BASE_URL = "https://newsapi.org/v2/";
-    private readonly HttpClient _httpClient;
+    private HttpClient _httpClient;
     private string ApiKey;
 
     /// <summary>
@@ -20,20 +20,13 @@ public class SugarNewsApiClient
     /// </summary>
     /// <param name="apiKey">Your News API key. You can create one for free at https://newsapi.org.</param>
     /// <param name="httpClient">HttpClient factory or service.</param>
-    public SugarNewsApiClient(string apiKey, HttpClient httpClient)
+    public SugarNewsApiClient(string apiKey)
     {
         ApiKey = apiKey;
 
-        _httpClient = httpClient;
-        _httpClient.DefaultRequestHeaders.Add("user-agent", "SugarNews-API-csharp/0.1.2");
+        _httpClient = new HttpClient(new HttpClientHandler { AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate });
+        _httpClient.DefaultRequestHeaders.Add("user-agent", "News-API-csharp/0.1");
         _httpClient.DefaultRequestHeaders.Add("x-api-key", ApiKey);
-
-        var handler = new HttpClientHandler
-        {
-            AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-        };
-
-        _httpClient = new HttpClient(handler);
     }
 
     /// <summary>
@@ -196,8 +189,8 @@ public class SugarNewsApiClient
         if (!string.IsNullOrWhiteSpace(json))
         {
             // convert the json to an obj
-            var apiResponse = JsonSerializer.Deserialize<ApiResponse>(json);
-            //var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(json);
+            //var apiResponse = JsonSerializer.Deserialize<ApiResponse>(json);
+            var apiResponse = JsonConvert.DeserializeObject<ApiResponse>(json);
             articlesResult.Status = apiResponse!.Status;
             if (articlesResult.Status == Statuses.Ok)
             {
