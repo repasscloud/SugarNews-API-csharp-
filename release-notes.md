@@ -1,7 +1,7 @@
-# Release Notes - Version 0.1.0-dev
+# Release Notes - Version 1.0.2
 
 ## Overview
-n/a
+Un-simplified code, this had an averse effect on the projects operational working [#5](https://github.com/repasscloud/SugarNews-API-csharp-client/issues/5)
 
 ## New Features
 
