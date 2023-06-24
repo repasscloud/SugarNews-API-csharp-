@@ -1,10 +1,11 @@
 ﻿using SugarNewsAPI.Constants;
 
-namespace SugarNewsAPI.Models;
-
-public class Error
+namespace SugarNewsAPI.Models
 {
-    public ErrorCodes Code { get; set; }
-    public string? Message { get; set; }
+    public class Error
+    {
+        public ErrorCodes Code { get; set; }
+        public string? Message { get; set; }
+    }
 }
 

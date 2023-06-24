@@ -1,21 +1,22 @@
-﻿namespace SugarNewsAPI.Constants;
-
-public enum ErrorCodes
+﻿namespace SugarNewsAPI.Constants
 {
-    ApiKeyExhausted,
-    ApiKeyMissing,
-    ApiKeyInvalid,
-    ApiKeyDisabled,
-    ParametersMissing,
-    ParametersIncompatible,
-    ParameterInvalid,
-    RateLimited,
-    RequestTimeout,
-    SourcesTooMany,
-    SourceDoesNotExist,
-    SourceUnavailableSortedBy,
-    SourceTemporarilyUnavailable,
-    UnexpectedError,
-    UnknownError
+    public enum ErrorCodes
+    {
+        ApiKeyExhausted,
+        ApiKeyMissing,
+        ApiKeyInvalid,
+        ApiKeyDisabled,
+        ParametersMissing,
+        ParametersIncompatible,
+        ParameterInvalid,
+        RateLimited,
+        RequestTimeout,
+        SourcesTooMany,
+        SourceDoesNotExist,
+        SourceUnavailableSortedBy,
+        SourceTemporarilyUnavailable,
+        UnexpectedError,
+        UnknownError
+    }
 }
 
