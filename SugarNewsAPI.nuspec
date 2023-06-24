@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>SugarNewsAPI</id>
-    <version>1.0.2</version>
+    <version>1.0.4</version>
     <title>SugarNews API Client</title>
     <authors>RePass Cloud Pty Ltd</authors>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
