@@ -1,0 +1,44 @@
+name: NuGet Publish
+
+on:
+  pull_request:
+    branches: [ "main" ]
+    
+jobs:
+  build-and-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: '7.0.x'
+
+    - name: Set version
+      shell: pwsh
+      run: |
+        $versionInfoPath = "${{ github.workspace }}/version_info"
+        $versionInfoContent = Get-Content -Path $versionInfoPath
+        $versionPattern = "<version>(.*?)<\/version>"
+        $nuspecFilePath = "${{ github.workspace }}/SugarNewsAPI.nuspec"
+        $nuspecContent = Get-Content -Path $nuspecFilePath
+        $newNuspecContent = $nuspecContent -replace $versionPattern, "<version>$versionInfoContent</version>"
+        $newNuspecContent | Set-Content -Path $nuspecFilePath
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Pack
+      run: dotnet pack --configuration Release --include-symbols
+
+    - name: Create NuGet package
+      run: nuget pack SugarNewsAPI.nuspec -Properties Configuration=Release
+
+    - name: Publish NuGet package
+      run: dotnet nuget push *.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_API_KEY }}
