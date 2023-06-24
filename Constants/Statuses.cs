@@ -1,14 +1,15 @@
-﻿namespace SugarNewsAPI.Constants;
-
-public enum Statuses
+﻿namespace SugarNewsAPI.Constants
 {
-    /// <summary>
-    /// Request was successful
-    /// </summary>
-    Ok,
-    /// <summary>
-    /// Request failed
-    /// </summary>
-    Error
+    public enum Statuses
+    {
+        /// <summary>
+        /// Request was successful
+        /// </summary>
+        Ok,
+        /// <summary>
+        /// Request failed
+        /// </summary>
+        Error
+    }
 }
 
