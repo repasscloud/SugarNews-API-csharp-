@@ -1,17 +1,16 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace SugarNewsAPI.Constants
+namespace SugarNewsAPI.Constants;
+
+[JsonConverter(typeof(StringEnumConverter))]
+public enum Categories
 {
-    [JsonConverter(typeof(StringEnumConverter))]
-    public enum Categories
-    {
-        Business,
-        Entertainment,
-        Health,
-        Science,
-        Sports,
-        Technology
-    }
+    Business,
+    Entertainment,
+    Health,
+    Science,
+    Sports,
+    Technology
 }
 

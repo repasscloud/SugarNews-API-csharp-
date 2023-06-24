@@ -1,9 +1,8 @@
-﻿namespace SugarNewsAPI.Models
+﻿namespace SugarNewsAPI.Models;
+
+public class Source
 {
-    public class Source
-    {
-        public string? Id { get; set; }
-        public string? Name { get; set; }
-    }
+    public string? Id { get; set; }
+    public string? Name { get; set; }
 }
 

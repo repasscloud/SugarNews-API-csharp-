@@ -1,14 +1,13 @@
 ﻿using SugarNewsAPI.Constants;
 
-namespace SugarNewsAPI.Models
+namespace SugarNewsAPI.Models;
+
+internal class ApiResponse
 {
-    internal class ApiResponse
-    {
-        public Statuses Status { get; set; }
-        public ErrorCodes? Code { get; set; }
-        public string? Message { get; set; }
-        public List<Article>? Articles { get; set; }
-        public int TotalResults { get; set; }
-    }
+    public Statuses Status { get; set; }
+    public ErrorCodes? Code { get; set; }
+    public string? Message { get; set; }
+    public List<Article>? Articles { get; set; }
+    public int TotalResults { get; set; }
 }
 
